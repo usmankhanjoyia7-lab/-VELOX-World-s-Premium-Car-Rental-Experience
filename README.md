@@ -107,3 +107,82 @@ This project is not just design — it uses real business psychology:
 ---
 
 ## 📂 Project Structure
+VELOX/
+│
+├── index.html
+├── assets/
+│ ├── images/
+│ └── icons/
+└── README.md
+
+
+---
+
+
+---
+
+## 🌐 Live Demo
+
+
+ https://usmankhanjoyia7-lab.github.io/-VELOX-World-s-Premium-Car-Rental-Experience/#
+
+
+## 🚀 How to Use
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/velox-car-rental.git
+
+ 
+🎯 Purpose of This Project
+
+This project is built to:
+
+Showcase frontend design skills
+
+Demonstrate UI/UX thinking
+
+Build a strong portfolio piece
+
+Attract clients & opportunities
+
+🔮 Future Improvements
+
+JavaScript functionality (booking system)
+
+Backend integration
+
+Payment gateway
+
+Real-time availability system
+
+👨‍💻 Author
+
+Muhammad Usman
+
+Passionate about Web Development & Design
+
+Focused on building high-quality digital experiences
+
+⭐ Final Note
+
+If you like this project, consider giving it a ⭐ on GitHub.
+It helps a lot and motivates to build more amazing projects.
+
+"Design is not just how it looks — it's how it converts."
+
+
+---
+
+## 🔥 Extra Pro  
+
+ 
+### 1. Repo Name:
+
+velox-premium-car-rental-ui
+
+
+### 2. Description:
+
+Luxury car rental frontend UI with high-conversion UX, modern design, and premium user experience.
+
