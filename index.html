@@ -1,0 +1,678 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELOX — World's Premium Car Rental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">VELOX<span class="dot">.</span></a>
+  <ul class="nav-links">
+    <li><a href="#fleet">Fleet</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#driver">Drive With Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#">Locations</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-ghost" onclick="toast('🔑','Sign in coming soon — stay tuned!')">Sign In</button>
+    <button class="btn-primary" onclick="scrollTo({top:0,behavior:'smooth'})">Book a Car</button>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <div class="hero-bg">
+    <img id="hero-img"
+      src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1800&q=85&fit=crop&auto=format"
+      alt="Luxury Sports Car at Night"
+      onload="this.style.opacity='.55'"
+    >
+  </div>
+  <div class="hero-inner">
+    <!-- LEFT TEXT -->
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span></span>
+        Premium Car Rental · 80+ Cities
+      </div>
+      <h1 class="hero-h1">
+        Drive<br>The <em>World.</em><br>Your Way.
+      </h1>
+      <p class="hero-sub">
+        500+ meticulously maintained vehicles. Instant confirmation. Zero hidden fees. From economy to hypercar — one platform, everywhere you need to be.
+      </p>
+      <div class="hero-trust">
+        <div class="trust-pill"><span class="ic">✓</span> Free Cancellation</div>
+        <div class="trust-pill"><span class="ic">✓</span> No Hidden Charges</div>
+        <div class="trust-pill"><span class="ic">★</span> 4.9 Rating — 12K+ Reviews</div>
+        <div class="trust-pill"><span class="ic">🌍</span> 80 Cities Worldwide</div>
+      </div>
+    </div>
+
+    <!-- RIGHT — BOOKING CARD -->
+    <div class="hero-right">
+      <div class="booking-card">
+        <div class="booking-card-title">
+          <span>Find Your Car</span>
+          <span style="font-size:12px;color:var(--muted);font-weight:400;">Instant confirmation</span>
+        </div>
+        <div class="booking-tabs">
+          <button class="tab on" onclick="setTab(this)">Self Drive</button>
+          <button class="tab" onclick="setTab(this)">With Driver</button>
+          <button class="tab" onclick="setTab(this)">Airport</button>
+        </div>
+        <div class="form-stack">
+          <div class="field">
+            <label>📍 Pick-up Location</label>
+            <select id="f-loc">
+              <option value="">Choose city...</option>
+              <option>Dubai, UAE 🇦🇪</option>
+              <option>London, UK 🇬🇧</option>
+              <option>New York, USA 🇺🇸</option>
+              <option>Paris, France 🇫🇷</option>
+              <option>Tokyo, Japan 🇯🇵</option>
+              <option>Sydney, Australia 🇦🇺</option>
+              <option>Singapore 🇸🇬</option>
+              <option>Toronto, Canada 🇨🇦</option>
+              <option>Lahore, Pakistan 🇵🇰</option>
+              <option>Karachi, Pakistan 🇵🇰</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>📅 Pick-up Date</label>
+              <input type="datetime-local" id="f-pick">
+            </div>
+            <div class="field">
+              <label>🔄 Return Date</label>
+              <input type="datetime-local" id="f-ret">
+            </div>
+          </div>
+          <div class="field">
+            <label>🚘 Car Category</label>
+            <select id="f-cat">
+              <option value="">All Categories</option>
+              <option value="economy">Economy</option>
+              <option value="suv">SUV</option>
+              <option value="luxury">Luxury</option>
+              <option value="sports">Sports / Supercar</option>
+              <option value="electric">Electric</option>
+              <option value="van">Van / Minivan</option>
+            </select>
+          </div>
+          <button class="btn-search" onclick="doSearch()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Check Availability Instantly
+          </button>
+        </div>
+        <div class="scarcity">
+          <div class="scar-text">
+            <span class="scar-dot"></span>
+            <span><b class="scar-red">Only 3 cars</b> left for today's dates</span>
+          </div>
+          <div class="timer">
+            Price locked:
+            <span class="timer-box" id="tm-m">14</span>:<span class="timer-box" id="tm-s">59</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker-track">
+    <span class="ticker-item">🏆 Over 12,000 Happy Customers <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">⚡ Book in Under 60 Seconds <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">🛡️ Free Cancellation Guarantee <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">🌍 80+ Cities Worldwide <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">✅ Zero Hidden Charges <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">📱 WhatsApp Support 24/7 <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">🏆 Over 12,000 Happy Customers <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">⚡ Book in Under 60 Seconds <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">🛡️ Free Cancellation Guarantee <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">🌍 80+ Cities Worldwide <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">✅ Zero Hidden Charges <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">📱 WhatsApp Support 24/7 <span class="ticker-sep">·</span></span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat"><div class="stat-n" id="st1">0</div><div class="stat-l">Vehicles Available</div></div>
+  <div class="stat"><div class="stat-n" id="st2">0</div><div class="stat-l">Cities Worldwide</div></div>
+  <div class="stat"><div class="stat-n" id="st3">0</div><div class="stat-l">Happy Customers</div></div>
+  <div class="stat"><div class="stat-n" id="st4">0</div><div class="stat-l">5-Star Reviews</div></div>
+</div>
+
+<!-- ══════════ FLEET ══════════ -->
+<section>
+<div id="fleet">
+  <div class="section-head" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+    <div>
+      <div class="label">Our Fleet</div>
+      <h2 style="font-family:var(--font-display);font-size:clamp(38px,5vw,64px);font-weight:800;letter-spacing:-1px;line-height:.95;">
+        Every Car.<br>Every Journey.
+      </h2>
+    </div>
+    <div id="results-info" style="font-size:14px;color:var(--muted);display:none;">
+      Showing <b style="color:var(--gold);" id="res-count">0</b> vehicles
+    </div>
+  </div>
+
+  <!-- CATEGORY PILLS -->
+  <div class="cat-scroll">
+    <button class="cat-pill on" onclick="filterFleet('all',this)"><span class="emoji">🚗</span>All Vehicles</button>
+    <button class="cat-pill" onclick="filterFleet('economy',this)"><span class="emoji">🚙</span>Economy</button>
+    <button class="cat-pill" onclick="filterFleet('suv',this)"><span class="emoji">🚐</span>SUV & 4x4</button>
+    <button class="cat-pill" onclick="filterFleet('luxury',this)"><span class="emoji">🏅</span>Luxury</button>
+    <button class="cat-pill" onclick="filterFleet('sports',this)"><span class="emoji">🏎️</span>Sports & Supercar</button>
+    <button class="cat-pill" onclick="filterFleet('electric',this)"><span class="emoji">⚡</span>Electric</button>
+    <button class="cat-pill" onclick="filterFleet('van',this)"><span class="emoji">🚌</span>Van & Minivan</button>
+  </div>
+
+  <!-- SORT BAR -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="cat-pill" onclick="sortFleet('price',this)" style="padding:8px 16px;">Price ↑</button>
+      <button class="cat-pill" onclick="sortFleet('price-d',this)" style="padding:8px 16px;">Price ↓</button>
+      <button class="cat-pill" onclick="sortFleet('pop',this)" style="padding:8px 16px;">❤️ Popular</button>
+    </div>
+  </div>
+
+  <!-- CARS GRID -->
+  <div class="cars-grid" id="cars-grid"></div>
+</div>
+</section>
+
+<!-- ══════════ WHY VELOX SPLIT ══════════ -->
+<section style="background:var(--dark);">
+<div class="split-section">
+  <div class="split-img-wrap">
+    <img
+      src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=900&q=85&fit=crop&auto=format"
+      alt="Luxury Car Interior"
+      loading="lazy"
+    >
+    <div class="split-pill">
+      <div class="num">60s</div>
+      <div class="txt">Average booking time</div>
+    </div>
+  </div>
+  <div class="split-text">
+    <span class="label">Why VELOX</span>
+    <h2>Built For The<br>Discerning Driver</h2>
+    <p>We don't just rent cars — we engineer experiences. From the moment you search to the moment you return the keys, every touchpoint is obsessively optimized for you.</p>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="f-icon">⚡</div>
+        <div>
+          <div class="f-title">Book in 60 Seconds</div>
+          <div class="f-desc">Streamlined 4-step flow designed to get you on the road — not stuck on forms.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="f-icon">🔒</div>
+        <div>
+          <div class="f-title">Zero Hidden Charges</div>
+          <div class="f-desc">Total price transparency. What you see in the quote is exactly what you pay.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="f-icon">🔄</div>
+        <div>
+          <div class="f-title">Free Cancellation</div>
+          <div class="f-desc">Cancel up to 24 hours before pickup for a complete, instant refund.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="f-icon">🌍</div>
+        <div>
+          <div class="f-title">Global Fleet, Local Service</div>
+          <div class="f-desc">One account across 80+ cities. Consistent premium standards, everywhere.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section id="how">
+<div class="how-inner">
+  <div class="section-head" style="text-align:center;">
+    <div class="label" style="text-align:center;margin-bottom:12px;">Simple Process</div>
+    <h2>How It Works</h2>
+    <p style="color:var(--muted);font-size:15px;max-width:440px;margin:12px auto 0;line-height:1.7;font-weight:300;">
+      From search to steering wheel in four effortless steps.
+    </p>
+  </div>
+  <div class="steps-row">
+    <div class="how-step">
+      <div class="step-num">01</div>
+      <div class="step-icon">📍</div>
+      <div class="step-title">Choose Location & Dates</div>
+      <p class="step-desc">Enter your city, pick-up time and return date. We'll show every available vehicle in real time.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🚗</div>
+      <div class="step-title">Pick Your Vehicle</div>
+      <p class="step-desc">Browse real photos, specs, transparent pricing and genuine reviews. Filter by category, price or popularity.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">03</div>
+      <div class="step-icon">✍️</div>
+      <div class="step-title">Add Extras & Pay</div>
+      <p class="step-desc">Select optional add-ons (GPS, driver, insurance), enter your details and pay securely — all in one flow.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">04</div>
+      <div class="step-icon">🔑</div>
+      <div class="step-title">Drive Away</div>
+      <p class="step-desc">Receive instant confirmation + QR code. Show up, collect your keys, and enjoy the road.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ DRIVER SECTION ══════════ -->
+<section id="driver">
+<div class="driver-inner">
+  <div class="driver-img-stack">
+    <div class="d-img-main">
+      <img
+        src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&q=85&fit=crop&auto=format"
+        alt="Professional Driver"
+        loading="lazy"
+      >
+    </div>
+    <div class="d-img-sm">
+      <img
+        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=85&fit=crop&auto=format"
+        alt="Car Dashboard"
+        loading="lazy"
+      >
+    </div>
+    <div class="driver-badge-float">
+      <div class="big">$2,500</div>
+      <div class="sm">Average monthly earning</div>
+    </div>
+  </div>
+  <div class="driver-text">
+    <span class="label">For Drivers</span>
+    <h2>Earn More.<br>Drive Smart.</h2>
+    <p>Join 3,000+ professional drivers on the VELOX platform. Flexible hours, premium clients, and guaranteed weekly payouts. Your car, your schedule, your income.</p>
+    <div class="driver-perks">
+      <div class="perk">
+        <div class="perk-icon">💰</div>
+        <div class="perk-title">Weekly Payouts</div>
+        <div class="perk-desc">Get paid every Friday, guaranteed.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">🕐</div>
+        <div class="perk-title">Flexible Hours</div>
+        <div class="perk-desc">Work when you want, full control.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">🛡️</div>
+        <div class="perk-title">Full Insurance</div>
+        <div class="perk-desc">Comprehensive coverage included.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">📈</div>
+        <div class="perk-title">Grow Your Rating</div>
+        <div class="perk-desc">Top drivers earn premium bookings.</div>
+      </div>
+    </div>
+    <button class="btn-driver" onclick="toast('🚗','Driver registration opening soon — we\'ll notify you!')">
+      Apply as a Driver
+      <span>→</span>
+    </button>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ REVIEWS ══════════ -->
+<section id="reviews">
+<div class="reviews-inner">
+  <div class="section-head" style="margin-bottom:40px;">
+    <div class="label">Customer Reviews</div>
+    <h2>12,000+ Happy Drivers</h2>
+  </div>
+  <div class="review-rating-hero">
+    <div class="rh-score">
+      <div class="rh-num">4.9</div>
+      <div class="rh-stars">★★★★★</div>
+      <div class="rh-count">12,483 reviews</div>
+    </div>
+    <div class="rh-divider"></div>
+    <div class="rh-bars">
+      <div class="rh-bar-row"><span class="rh-bar-lbl">5★</span><div class="rh-bar-track"><div class="rh-bar-fill" style="width:88%"></div></div><span style="font-size:12px;color:var(--muted);width:32px">88%</span></div>
+      <div class="rh-bar-row"><span class="rh-bar-lbl">4★</span><div class="rh-bar-track"><div class="rh-bar-fill" style="width:9%;opacity:.7"></div></div><span style="font-size:12px;color:var(--muted);width:32px">9%</span></div>
+      <div class="rh-bar-row"><span class="rh-bar-lbl">3★</span><div class="rh-bar-track"><div class="rh-bar-fill" style="width:2%;opacity:.5"></div></div><span style="font-size:12px;color:var(--muted);width:32px">2%</span></div>
+      <div class="rh-bar-row"><span class="rh-bar-lbl">2★</span><div class="rh-bar-track"><div class="rh-bar-fill" style="width:1%;opacity:.3"></div></div><span style="font-size:12px;color:var(--muted);width:32px">1%</span></div>
+      <div class="rh-bar-row"><span class="rh-bar-lbl">1★</span><div class="rh-bar-track"><div class="rh-bar-fill" style="width:0.5%;opacity:.2"></div></div><span style="font-size:12px;color:var(--muted);width:32px">&lt;1%</span></div>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">"Rented a Mercedes in Dubai for a week. The car was immaculate — not a scratch. Booking took 2 minutes, the team was waiting for me at the airport. VELOX is now my permanent travel partner."</p>
+      <div class="rv-author">
+        <div class="rv-av">JM</div>
+        <div>
+          <div class="rv-name">James Morrison</div>
+          <div class="rv-meta">Business Exec · Dubai, UAE</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">"Booked a Tesla for London — the whole process was flawless. No hidden fees, price exactly as shown. The car was brand new. I've used Hertz, Sixt, Enterprise — VELOX genuinely beats all of them."</p>
+      <div class="rv-author">
+        <div class="rv-av">SL</div>
+        <div>
+          <div class="rv-name">Sophie Laurent</div>
+          <div class="rv-meta">Entrepreneur · London, UK</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">"The Lamborghini Urus experience in New York was absolutely surreal. VELOX handled everything — insurance, delivery to hotel, everything transparent. Worth every penny. Will absolutely return."</p>
+      <div class="rv-author">
+        <div class="rv-av">RK</div>
+        <div>
+          <div class="rv-name">Raj Kumar</div>
+          <div class="rv-meta">Tech Founder · New York, USA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">VELOX<span class="dot">.</span></div>
+        <p class="foot-tagline">The world's premium car rental platform — built for speed, trust, and exceptional experiences in every city on earth.</p>
+        <div class="social-row">
+          <div class="soc-btn">𝕏</div>
+          <div class="soc-btn">in</div>
+          <div class="soc-btn">📸</div>
+          <div class="soc-btn">💬</div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Investors</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">Self Drive</a></li>
+          <li><a href="#">Chauffeur</a></li>
+          <li><a href="#">Airport Transfer</a></li>
+          <li><a href="#">Long-term Rental</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">Insurance Info</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2025 VELOX Technologies Inc. — All rights reserved.</span>
+      <div class="foot-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY BAR -->
+<div id="sticky">
+  <div class="sbar-car">
+    <div class="sbar-car-img"><img id="sb-img" src="" alt=""></div>
+    <div>
+      <div class="sbar-name" id="sb-name">—</div>
+      <div class="sbar-days" id="sb-days">— days rental</div>
+    </div>
+  </div>
+  <div class="sbar-mid">
+    <div>
+      <div class="sbar-total-lbl">Total</div>
+      <div class="sbar-total" id="sb-total">$0</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button class="sbar-close" onclick="document.getElementById('sticky').classList.remove('up')">✕</button>
+    <button class="btn-primary" onclick="if(activeCar)openModal(activeCar)">Book This Car →</button>
+  </div>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeModal()"></div>
+
+<!-- BOOKING MODAL -->
+<div class="modal" id="modal">
+  <div class="mhdr">
+    <div class="mhdr-title">Complete Your Booking</div>
+    <div class="mhdr-close" onclick="closeModal()">✕</div>
+  </div>
+  <!-- PROGRESS -->
+  <div class="progress">
+    <div class="prog-step cur" id="ps1"><div class="prog-dot">1</div><div class="prog-lbl">Vehicle</div></div>
+    <div class="prog-line" id="pl1"></div>
+    <div class="prog-step" id="ps2"><div class="prog-dot">2</div><div class="prog-lbl">Extras</div></div>
+    <div class="prog-line" id="pl2"></div>
+    <div class="prog-step" id="ps3"><div class="prog-dot">3</div><div class="prog-lbl">Details</div></div>
+    <div class="prog-line" id="pl3"></div>
+    <div class="prog-step" id="ps4"><div class="prog-dot">4</div><div class="prog-lbl">Payment</div></div>
+  </div>
+  <!-- BODY -->
+  <div class="mbody" id="mbody">
+    <!-- P1 -->
+    <div class="panel cur" id="p1">
+      <div class="car-confirm">
+        <div class="cc-img"><img id="m-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="cc-info">
+          <div class="cc-cat" id="m-cat">—</div>
+          <div class="cc-name" id="m-name">—</div>
+          <div style="display:flex;gap:12px;margin-top:6px;flex-wrap:wrap;" id="m-specs"></div>
+        </div>
+        <div class="cc-price" id="m-price">$0</div>
+      </div>
+      <div class="dates-row">
+        <div class="date-box">
+          <div class="date-lbl">Pick-up</div>
+          <div class="date-val" id="m-loc">Dubai, UAE</div>
+          <div class="date-sub" id="m-pickdate">—</div>
+        </div>
+        <div class="date-box">
+          <div class="date-lbl">Return</div>
+          <div class="date-val" id="m-retloc">Dubai, UAE</div>
+          <div class="date-sub" id="m-retdate">—</div>
+        </div>
+      </div>
+      <div class="free-cancel">
+        <span style="font-size:18px;">✓</span>
+        <span><b>Free cancellation</b> up to 24 hours before pickup. Full refund, no questions asked.</span>
+      </div>
+    </div>
+    <!-- P2 — EXTRAS -->
+    <div class="panel" id="p2">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:18px;">Enhance your journey with optional extras — all priced per day.</p>
+      <div class="addons-grid">
+        <div class="addon" onclick="toggleAddon(this,'gps',15)">
+          <div class="addon-ico">🗺️</div>
+          <div class="addon-info"><div class="addon-name">GPS Navigation</div><div class="addon-price">+$15 / day</div></div>
+          <div class="addon-chk">✓</div>
+        </div>
+        <div class="addon" onclick="toggleAddon(this,'driver',80)">
+          <div class="addon-ico">👨‍✈️</div>
+          <div class="addon-info"><div class="addon-name">Professional Driver</div><div class="addon-price">+$80 / day</div></div>
+          <div class="addon-chk">✓</div>
+        </div>
+        <div class="addon" onclick="toggleAddon(this,'seat',12)">
+          <div class="addon-ico">👶</div>
+          <div class="addon-info"><div class="addon-name">Child Safety Seat</div><div class="addon-price">+$12 / day</div></div>
+          <div class="addon-chk">✓</div>
+        </div>
+        <div class="addon" onclick="toggleAddon(this,'ins',35)">
+          <div class="addon-ico">🛡️</div>
+          <div class="addon-info"><div class="addon-name">Premium Insurance</div><div class="addon-price">+$35 / day</div></div>
+          <div class="addon-chk">✓</div>
+        </div>
+        <div class="addon" onclick="toggleAddon(this,'wifi',10)">
+          <div class="addon-ico">📶</div>
+          <div class="addon-info"><div class="addon-name">Pocket WiFi</div><div class="addon-price">+$10 / day</div></div>
+          <div class="addon-chk">✓</div>
+        </div>
+        <div class="addon" onclick="toggleAddon(this,'fuel',18)">
+          <div class="addon-ico">⛽</div>
+          <div class="addon-info"><div class="addon-name">Pre-paid Fuel Pack</div><div class="addon-price">+$18 / day</div></div>
+          <div class="addon-chk">✓</div>
+        </div>
+      </div>
+    </div>
+    <!-- P3 — DETAILS -->
+    <div class="panel" id="p3">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:18px;">Your details are encrypted and never shared.</p>
+      <div class="dform">
+        <div class="dinput-wrap">
+          <label class="dinput-lbl">First Name</label>
+          <input class="dinput" type="text" placeholder="John" id="d-fn">
+        </div>
+        <div class="dinput-wrap">
+          <label class="dinput-lbl">Last Name</label>
+          <input class="dinput" type="text" placeholder="Smith" id="d-ln">
+        </div>
+        <div class="dinput-wrap span2">
+          <label class="dinput-lbl">Email Address</label>
+          <input class="dinput" type="email" placeholder="john@email.com" id="d-em">
+        </div>
+        <div class="dinput-wrap">
+          <label class="dinput-lbl">Phone Number</label>
+          <input class="dinput" type="tel" placeholder="+1 555 000 0000" id="d-ph">
+        </div>
+        <div class="dinput-wrap">
+          <label class="dinput-lbl">Driver's License No.</label>
+          <input class="dinput" type="text" placeholder="License number" id="d-lic">
+        </div>
+        <div class="dinput-wrap span2">
+          <label class="dinput-lbl">Flight Number (Optional)</label>
+          <input class="dinput" type="text" placeholder="EK 504" id="d-fl">
+        </div>
+      </div>
+    </div>
+    <!-- P4 — PAYMENT -->
+    <div class="panel" id="p4">
+      <div class="pay-tabs">
+        <div class="pay-tab on" onclick="setPay(this)">💳 Credit Card</div>
+        <div class="pay-tab" onclick="setPay(this)">📱 Apple Pay</div>
+        <div class="pay-tab" onclick="setPay(this)">🌐 PayPal</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="dinput-wrap">
+          <label class="dinput-lbl">Card Number</label>
+          <input class="dinput" type="text" placeholder="4242 4242 4242 4242" maxlength="19" oninput="fmtCard(this)" id="cn">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="dinput-wrap">
+            <label class="dinput-lbl">Expiry</label>
+            <input class="dinput" type="text" placeholder="MM / YY" maxlength="7">
+          </div>
+          <div class="dinput-wrap">
+            <label class="dinput-lbl">CVV</label>
+            <input class="dinput" type="text" placeholder="•••" maxlength="3">
+          </div>
+        </div>
+        <div class="dinput-wrap">
+          <label class="dinput-lbl">Cardholder Name</label>
+          <input class="dinput" type="text" placeholder="As printed on card">
+        </div>
+      </div>
+      <div class="order-box">
+        <div class="orow"><span>Base Rental</span><span id="o-base">—</span></div>
+        <div class="orow"><span>Add-ons</span><span id="o-add">$0</span></div>
+        <div class="orow"><span>Taxes & Fees (8%)</span><span id="o-tax">$0</span></div>
+        <div class="orow" style="color:#22C55E;"><span>Discount Applied</span><span id="o-disc">-$0</span></div>
+        <div class="orow total"><span>Total Due</span><span id="o-total">$0</span></div>
+        <div class="saved-line" id="o-saved" style="display:none;">🎉 You're saving <b id="o-savedamt">$0</b> on this booking!</div>
+      </div>
+      <div style="text-align:center;margin-top:14px;font-size:11px;color:rgba(255,255,255,.2);">
+        🔒 256-bit SSL Encryption · PCI DSS Compliant · Safe Checkout
+      </div>
+    </div>
+  </div><!-- end mbody -->
+
+  <!-- SUCCESS -->
+  <div class="success-pane" id="success-pane">
+    <div class="success-icon">✓</div>
+    <div class="success-h">Booking Confirmed!</div>
+    <p class="success-p">Your vehicle is reserved. A confirmation email with pickup instructions and QR code has been sent to your inbox.</p>
+    <div class="ref-code" id="ref-code">VLX-000000</div>
+    <div class="success-btns">
+      <button class="btn-primary" onclick="closeModal()">Done</button>
+      <button class="btn-ghost" onclick="toast('📧','Confirmation email resent successfully!')">Resend Email</button>
+    </div>
+  </div>
+
+  <div class="mftr" id="mftr">
+    <button class="mftr-back" id="btn-back" onclick="stepBack()" style="visibility:hidden;">← Back</button>
+    <span style="font-size:12px;color:rgba(255,255,255,.25);" id="step-hint">Step 1 of 4</span>
+    <button class="mftr-next" id="btn-next" onclick="stepNext()">Continue →</button>
+  </div>
+</div>
+
+<!-- EXIT POPUP -->
+<div id="exit-bg" onclick="closeExit()"></div>
+<div id="exit-box">
+  <div class="exit-img">
+    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&q=80&fit=crop&auto=format" alt="Porsche 911">
+  </div>
+  <div class="exit-h">Wait — Don't Leave!</div>
+  <p class="exit-p">You're one step away from an incredible drive. Here's an exclusive discount just for you.</p>
+  <div class="exit-code-box">
+    <div class="exit-code">STAY15</div>
+    <div class="exit-sub">15% off your first booking · Expires tonight</div>
+  </div>
+  <button class="btn-exit-y" onclick="closeExit();document.getElementById('f-loc').focus()">Claim My 15% Discount →</button>
+  <button class="btn-exit-n" onclick="closeExit()">No thanks, I'll pay full price</button>
+</div>
+
+<!-- TOAST -->
+<div id="toast">
+  <span class="toast-ico" id="t-ico">✓</span>
+  <span class="toast-msg" id="t-msg">Message</span>
+</div>
+ 
+
+<script src="script.js"></script>
+</body>
+</html>
